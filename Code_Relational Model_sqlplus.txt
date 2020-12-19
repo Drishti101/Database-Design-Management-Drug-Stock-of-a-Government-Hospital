@@ -1,0 +1,241 @@
+SQL> create table DRUG(
+  2  Med_Id number constraint drug_mid_pk primary key,
+  3  Name varchar2(20) constraint drug_na_uk unique);
+
+Table created.
+
+SQL> insert into DRUG values(1,'Paracetamol');
+
+1 row created.
+
+SQL> insert into DRUG values(2,'Cetrizine');
+
+1 row created.
+
+SQL> insert into DRUG values(3,'Diclofenac');
+
+1 row created.
+
+SQL> insert into DRUG values(4,'Amoxycillin');
+
+1 row created.
+
+SQL> create table BATCH(
+  2  Batch_No number(5) constraint batch_bno_pk primary key,
+  3  Med_Id number constraint batch_mid_nn not null,
+  4  Manuf_Date date constraint batch_date_nn not null,
+  5  Expiry_Date date constraint batch_exdate_nn not null,
+  6  constraint batch_mid_fk foreign key(Med_Id) references DRUG(Med_Id));
+
+Table created.
+
+SQL> insert into BATCH values(123,1,'01-Jan-00','31-Jan-02');
+
+1 row created.
+
+SQL> insert into BATCH values(456,2,'01-Feb-00','28-Feb-02');
+
+1 row created.
+
+SQL> insert into BATCH values(789,3,'01-Jan-00','31-Jan-02');
+
+1 row created.
+
+SQL> insert into BATCH values(707,4,'01-May-00','31-May-02');
+
+1 row created.
+
+SQL> create table RecStockLog(
+  2  RID number constraint rslog_sno_pk primary key,
+  3  Med_Id number constraint rslog_mid_nn not null,
+  4  Received number constraint rslog_rec_nn not null,
+  5  RsDate date,
+  6  constraint rslog_mid_fk foreign key(Med_Id) references DRUG(Med_Id));
+
+Table created.
+
+SQL> insert into RecStockLog values(1,1,100,'01-Jan-2001');
+
+1 row created.
+
+SQL> insert into RecStockLog values(2,2,100,'01-Jan-2001');
+
+1 row created.
+
+SQL> insert into RecStockLog values(3,3,50,'01-Jan-2001');
+
+1 row created.
+
+SQL> insert into RecStockLog values(4,4,50,'01-Jan-2001');
+
+1 row created.
+
+SQL> insert into RecStockLog values(5,1,50,'01-Feb-2001'); 
+
+1 row created.
+
+SQL> Create table STOCK(
+  2  SID number constraint stock_sno_pk primary key,
+  3  Med_Id number constraint stock_mid_nn not null,
+  4  Balance number constraint stock_bal_nn not null,
+  5  Remark long constraint stock_rem_nn not null);
+
+Table created.
+
+SQL> insert into Stock values(1,1,100,'Received. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(2,1,87,'Consumed. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(3,2,100,'Received. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(4,2,92,'Consumed. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(5,3,50,'Received. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(6,4,50,'Received. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(7,4,45,'Consumed. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(8,3,35,'Consumed. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(9,1,82,'Consumed. Checked.');
+
+1 row created.
+
+SQL> insert into Stock values(10,1,132,'Received. Checked.');
+
+1 row created.
+
+SQL> select * from DRUG;
+
+    MED_ID NAME                                                                 
+---------- --------------------                                                 
+         1 Paracetamol                                                          
+         2 Cetrizine                                                            
+         3 Diclofenac                                                           
+         4 Amoxycillin                                                          
+
+SQL> select * from BATCH;
+
+  BATCH_NO     MED_ID MANUF_DAT EXPIRY_DA
+---------- ---------- --------- ---------
+       123          1 01-JAN-00 31-JAN-02
+       456          2 01-FEB-00 28-FEB-02
+       789          3 01-JAN-00 31-JAN-02
+       707          4 01-MAY-00 31-MAY-02                                      
+
+SQL> select * from RecStockLog;
+
+       SNO     MED_ID   RECEIVED RSDATE
+---------- ---------- ---------- ---------
+         1          1        100 01-JAN-01
+         2          2        100 01-JAN-01
+         3          3         50 01-JAN-01
+         4          4         50 01-JAN-01
+         5          1         50 01-FEB-01         
+
+SQL> select * from STOCK;
+
+       SNO     MED_ID    BALANCE REMARK                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+---------- ---------- ---------- --------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                   
+         1          1        100 Received. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         2          1         87 Consumed. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         3          2        100 Received. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         4          2         92 Consumed. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         5          3         50 Received. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         6          4         50 Received. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         7          4         45 Consumed. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         8          3         35 Consumed. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         9          1         82 Consumed. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        10          1        132 Received. Checked.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+10 rows selected.
+
+SQL> CREATE TABLE ConStockLog(
+  2  CID number constraint conslog_sno_pk Primary Key,
+  3  ConDate date,
+  4  OPD_No number constraint conslog_ono_nn not null,
+  5  Med_Id number constraint conslog_mid_nn not null,
+  6  Consumed number constraint conslog_cons_nn not null);
+
+Table created.
+
+SQL> INSERT INTO ConStockLog values(1,'01-Jan-2001',1,1,10);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(2,'01-Jan-2001',1,2,5);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(3,'01-Jan-2001',1,3,10);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(4,'01-Jan-2001',1,4,4);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(5,'01-Jan-2001',2,1,1);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(6,'01-Jan-2001',2,2,3);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(7,'01-Jan-2001',2,4,1);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLogg values(8,'01-Jan-2001',3,1,2);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(9,'01-Jan-2001',3,3,4);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(10,'01-Jan-2001',4,3,1);
+
+1 row created.
+
+SQL> INSERT INTO ConStockLog values(11,'01-Feb-2001',5,1,5);
+
+1 row created.
+
+SQL> select * from ConStockLog;
+
+  SERIALNO CONDATE       OPD_NO     MED_ID   CONSUMED
+---------- --------- ---------- ---------- ----------
+         1 01-JAN-01          1          1         10
+         2 01-JAN-01          1          2          5
+         3 01-JAN-01          1          3         10
+         4 01-JAN-01          1          4          4
+         5 01-JAN-01          2          1          1
+         6 01-JAN-01          2          2          3
+         7 01-JAN-01          2          4          1
+         8 01-JAN-01          3          1          2
+         9 01-JAN-01          3          3          4
+        10 01-JAN-01          4          3          1
+        11 01-FEB-01          5          1          5
+
+11 rows selected.
+
+SQL> spool off
