@@ -16,4 +16,4 @@ Code_Relational Model_sqlplus.txt contains the code of the Relational Model in s
 
 The project ends here.
 
-This project is a combination of design and implementation of a database management system for management of drug stock of a government hospital.  This project is designed exclusively for Government Hospitals' drug stock management and not for Private Hospitals' because of the difference in the nature of their structures like only drugs' chemical name is available in the database for Government Hospitals and record of brand name of the drugs is not maintained unlike Private Hospitals, etc.
+Note: This project is a combination of design and implementation of a database management system for management of drug stock of a government hospital.  This project is designed exclusively for Government Hospitals' drug stock management and not for Private Hospitals' because of the difference in the nature of their structures like only drugs' chemical name is available in the database for Government Hospitals and record of brand name of the drugs is not maintained unlike Private Hospitals, etc.
